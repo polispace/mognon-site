@@ -20,8 +20,9 @@ collections:
             name: hero
             widget: object
             fields:
-              - { label: Immagine di sfondo, name: image, widget: image }
-              - { label: Titolo (una riga per line), name: title, widget: text }
+              - { label: "ID Vimeo (loop background)", name: video_id, widget: string, hint: "Solo il numero. Il video gira in loop senza audio né controlli." }
+              - { label: "Immagine fallback (se video assente)", name: image, widget: image }
+              - { label: Titolo (una riga per linea), name: title, widget: text }
               - { label: Sottotitolo (una riga per linea), name: subtitle, widget: text }
 
           - label: Intro — "Ciao!"

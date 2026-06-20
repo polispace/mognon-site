@@ -34,8 +34,16 @@
   :focus-visible{outline:2px solid var(--violet);outline-offset:3px}
 
   /* ---------- HERO ---------- */
-  .hero{position:relative;min-height:86vh;display:flex;align-items:flex-end;overflow:hidden;background:#7a6f8e}
+  .hero{position:relative;min-height:86vh;display:flex;align-items:flex-end;overflow:hidden;background:#0a0a0a}
   .hero__bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 20%}
+  /* video loop background — copre come object-fit:cover */
+  .hero__video{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+  .hero__video iframe{
+    position:absolute;top:50%;left:50%;border:0;
+    width:177.78vh;height:56.25vw;   /* 16:9 cover */
+    min-width:100%;min-height:100%;
+    transform:translate(-50%,-50%);
+  }
   .hero::after{content:"";position:absolute;inset:0;pointer-events:none;background:rgba(0,0,0,0.4)}
   .hero__content{position:relative;z-index:1;color:var(--hero-fg);padding:0 5.5% 8%;max-width:42rem;
     text-shadow:0 1px 26px rgba(8,6,28,.32)}
@@ -124,6 +132,8 @@
 
   <header class="hero">
     <img class="hero__bg" src="assets/poster.jpg" alt="">
+    <!-- video loop hero: background=1 → autoplay, loop, muted, no controls -->
+    <div class="hero__video" aria-hidden="true" id="heroVideo"></div>
     <div class="hero__content">
       <h1 class="hero__title">Generative AI<br>+ Motion Designer</h1>
       <p class="hero__sub">Produzione<br>Post-produzione<br>Animazione<br>di contenuti multimediali statici e animati.</p>
@@ -186,6 +196,17 @@
 
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
   <script>
+    // Hero video loop
+    function initHeroVideo(id){
+      var el = document.getElementById('heroVideo');
+      if(!el || !id) return;
+      var ifr = document.createElement('iframe');
+      ifr.src = 'https://player.vimeo.com/video/'+id+'?background=1&autoplay=1&loop=1&muted=1';
+      ifr.allow = 'autoplay; fullscreen';
+      el.appendChild(ifr);
+    }
+    initHeroVideo('1135024751'); // ID di default da content.json
+
     // Swiper init
     var gallerySwiper = new Swiper('.gallery .swiper', {
       loop: true,
@@ -222,6 +243,7 @@
 
         // Hero
         if(d.hero){
+          if(d.hero.video_id) initHeroVideo(d.hero.video_id);
           if(d.hero.image) document.querySelector('.hero__bg').src = d.hero.image;
           if(d.hero.title){
             document.querySelector('.hero__title').innerHTML =
