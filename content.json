@@ -3,7 +3,7 @@
     "video_id": "1135024751",
     "video_loop": true,
     "image": "assets/jameson-zimmer-c8bcbaukr2w-unsplash.jpg",
-    "title": "Ciao Sandro\nGenerative AI\n+ Motion Designer",
+    "title": "Grandeeee Sandro\nGenerative AI\n+ Motion Designer",
     "subtitle": "Produzione\nPost-produzione\nAnimazione\ndi contenuti multimediali statici e animati."
   },
   "intro": {
@@ -12,7 +12,7 @@
   },
   "reel": {
     "vimeo_id": "1135024751",
-    "video_loop": false,
+    "video_loop": true,
     "poster": "assets/volcano.jpg"
   },
   "services": [
