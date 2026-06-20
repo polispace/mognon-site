@@ -148,7 +148,7 @@
   <section class="reel" aria-label="Showreel">
     <div class="reel__frame" role="button" tabindex="0"
          data-vimeo-id="1135024751" data-loop="false" aria-label="Riproduci il video">
-      <img class="reel__poster" src="assets/volcano.jpg" alt="Anteprima del video">
+      <img class="reel__poster" src="" alt="Anteprima del video" style="opacity:0;transition:opacity .4s">
       <span class="reel__play" aria-hidden="true"></span>
     </div>
   </section>
@@ -287,7 +287,11 @@
           var frame = document.querySelector('.reel__frame');
           if(d.reel.vimeo_id) frame.setAttribute('data-vimeo-id', d.reel.vimeo_id);
           frame.setAttribute('data-loop', d.reel.video_loop ? 'true' : 'false');
-          if(d.reel.poster) document.querySelector('.reel__poster').src = d.reel.poster;
+          if(d.reel.poster){
+            var poster = document.querySelector('.reel__poster');
+            poster.onload = function(){ poster.style.opacity = '1'; };
+            poster.src = d.reel.poster;
+          }
         }
 
         if(d.services && d.services.length){
