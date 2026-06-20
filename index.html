@@ -129,7 +129,7 @@
 <body>
 
   <header class="hero">
-    <img class="hero__bg" src="assets/poster.jpg" alt="">
+    <img class="hero__bg" src="" alt="" style="opacity:0;transition:opacity .4s">
     <div class="hero__video" aria-hidden="true" id="heroVideo"></div>
     <div class="hero__content">
       <h1 class="hero__title">Generative AI<br>+ Motion Designer</h1>
@@ -268,7 +268,11 @@
 
         if(d.hero){
           initHeroVideo(d.hero.video_id||'1135024751', d.hero.video_loop !== false);
-          if(d.hero.image) document.querySelector('.hero__bg').src = d.hero.image;
+          if(d.hero.image){
+            var bg = document.querySelector('.hero__bg');
+            bg.onload = function(){ bg.style.opacity = '1'; };
+            bg.src = d.hero.image;
+          }
           if(d.hero.title) document.querySelector('.hero__title').innerHTML = d.hero.title.split('\n').join('<br>');
           if(d.hero.subtitle) document.querySelector('.hero__sub').innerHTML = d.hero.subtitle.replace(/\n/g,'<br>');
         }
