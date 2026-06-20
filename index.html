@@ -37,11 +37,10 @@
   /* ---------- HERO ---------- */
   .hero{position:relative;min-height:86vh;display:flex;align-items:flex-end;overflow:hidden;background:#0a0a0a}
   .hero__bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 20%}
-  /* video loop background — copre come object-fit:cover */
   .hero__video{position:absolute;inset:0;overflow:hidden;pointer-events:none}
   .hero__video iframe{
     position:absolute;top:50%;left:50%;border:0;
-    width:177.78vh;height:56.25vw;   /* 16:9 cover */
+    width:177.78vh;height:56.25vw;
     min-width:100%;min-height:100%;
     transform:translate(-50%,-50%);
   }
@@ -107,7 +106,6 @@
     :root{--gutter:8%}
     .gallery{aspect-ratio:16/11}
     .reel__frame{aspect-ratio:16/10}
-    .footer__links{flex-direction:row;gap:7%;flex-wrap:wrap}
   }
 
   /* ---------- DESKTOP ---------- */
@@ -123,7 +121,6 @@
     }
     .services__label{grid-column:1;margin-bottom:0;padding-top:.35em}
     .services__list{grid-column:2}
-    .footer__links{gap:9%}
   }
 
   @media(prefers-reduced-motion:reduce){*{transition:none!important}}
@@ -133,7 +130,6 @@
 
   <header class="hero">
     <img class="hero__bg" src="assets/poster.jpg" alt="">
-    <!-- video loop hero: background=1 → autoplay, loop, muted, no controls -->
     <div class="hero__video" aria-hidden="true" id="heroVideo"></div>
     <div class="hero__content">
       <h1 class="hero__title">Generative AI<br>+ Motion Designer</h1>
@@ -150,7 +146,8 @@
   </section>
 
   <section class="reel" aria-label="Showreel">
-    <div class="reel__frame" role="button" tabindex="0" data-vimeo-id="1135024751" aria-label="Riproduci il video">
+    <div class="reel__frame" role="button" tabindex="0"
+         data-vimeo-id="1135024751" data-loop="false" aria-label="Riproduci il video">
       <img class="reel__poster" src="assets/volcano.jpg" alt="Anteprima del video">
       <span class="reel__play" aria-hidden="true"></span>
     </div>
@@ -189,52 +186,68 @@
     <h2 class="footer__name">Marco Mognon</h2>
     <p class="footer__role">Generative AI Motion Designer</p>
     <div class="footer__links">
-      <div>Milano based<br><a href="mailto:marcomognon2@gmail.com">marcomognon2@gmail.com</a></div>
+      <div><a href="mailto:marcomognon2@gmail.com">marcomognon2@gmail.com</a></div>
       <div><a href="https://www.linkedin.com/in/marco-mognon-244123b5/" target="_blank" rel="noopener">LinkedIn</a></div>
+      <div>Milano based</div>
     </div>
     <p class="footer__copy">© 2026 All Rights Reserved</p>
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
   <script>
-    // Netlify Identity: dopo login/invito → /admin/
+    // Netlify Identity → /admin/ dopo login/invito
     if(window.netlifyIdentity){
       window.netlifyIdentity.on('init', function(user){
-        if(!user){
-          window.netlifyIdentity.on('login', function(){
-            document.location.href = '/admin/';
-          });
-        }
+        if(!user) window.netlifyIdentity.on('login', function(){ document.location.href='/admin/'; });
       });
     }
 
-    // Hero video loop
-    function initHeroVideo(id){
+    // Hero video: loop=true → background=1 (autoplay+loop+mute), loop=false → autoplay senza loop
+    function initHeroVideo(id, loop){
       var el = document.getElementById('heroVideo');
       if(!el || !id) return;
+      el.innerHTML = '';
       var ifr = document.createElement('iframe');
-      ifr.src = 'https://player.vimeo.com/video/'+id+'?background=1&autoplay=1&loop=1&muted=1';
+      ifr.src = 'https://player.vimeo.com/video/'+id+'?'+(
+        loop !== false
+          ? 'background=1'
+          : 'autoplay=1&loop=0&muted=1&controls=0&title=0&byline=0&portrait=0'
+      );
       ifr.allow = 'autoplay; fullscreen';
       el.appendChild(ifr);
     }
-    initHeroVideo('1135024751'); // ID di default da content.json
+    initHeroVideo('1135024751', true);
 
-    // Swiper init
-    var gallerySwiper = new Swiper('.gallery .swiper', {
-      loop: true,
-      speed: 600,
-      pagination: { el: '.swiper-pagination', clickable: true },
-      navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
-    });
+    // Gallery Swiper: autoplay=true → avanza da solo ogni 4s
+    var gallerySwiper;
+    function initGallery(images, autoplay){
+      if(images){
+        document.querySelector('.gallery .swiper-wrapper').innerHTML =
+          images.map(function(src,i){
+            return '<div class="swiper-slide"><img src="'+src+'" alt="Lavoro '+(i+1)+'"></div>';
+          }).join('');
+      }
+      if(gallerySwiper) gallerySwiper.destroy(true, true);
+      var cfg = {
+        loop: true, speed: 600,
+        pagination: { el: '.swiper-pagination', clickable: true },
+        navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
+      };
+      if(autoplay) cfg.autoplay = { delay: 4000, disableOnInteraction: false };
+      gallerySwiper = new Swiper('.gallery .swiper', cfg);
+    }
+    initGallery(null, false);
 
-    // Vimeo player
+    // Reel: click-to-play, loop controllato da data-loop
     document.querySelectorAll('.reel__frame').forEach(function(frame){
       function play(){
-        var id = frame.getAttribute('data-vimeo-id');
+        var id   = frame.getAttribute('data-vimeo-id');
+        var loop = frame.getAttribute('data-loop') === 'true';
         if(!id) return;
         var ifr = document.createElement('iframe');
         ifr.className = 'reel__iframe';
-        ifr.src = 'https://player.vimeo.com/video/'+id+'?autoplay=1&title=0&byline=0&portrait=0';
+        ifr.src = 'https://player.vimeo.com/video/'+id+
+          '?autoplay=1&title=0&byline=0&portrait=0'+(loop ? '&loop=1' : '');
         ifr.allow = 'autoplay; fullscreen; picture-in-picture';
         ifr.setAttribute('allowfullscreen','');
         frame.innerHTML = '';
@@ -246,77 +259,51 @@
       });
     });
 
-    // CMS content loader — aggiorna il DOM da content.json senza ricaricare la pagina
+    // CMS content loader
     (async function(){
       try {
         var r = await fetch('content.json');
         if(!r.ok) return;
         var d = await r.json();
 
-        // Hero
         if(d.hero){
-          if(d.hero.video_id) initHeroVideo(d.hero.video_id);
+          initHeroVideo(d.hero.video_id||'1135024751', d.hero.video_loop !== false);
           if(d.hero.image) document.querySelector('.hero__bg').src = d.hero.image;
-          if(d.hero.title){
-            document.querySelector('.hero__title').innerHTML =
-              d.hero.title.split('\n').join('<br>');
-          }
-          if(d.hero.subtitle){
-            document.querySelector('.hero__sub').innerHTML =
-              d.hero.subtitle.replace(/\n/g,'<br>');
-          }
+          if(d.hero.title) document.querySelector('.hero__title').innerHTML = d.hero.title.split('\n').join('<br>');
+          if(d.hero.subtitle) document.querySelector('.hero__sub').innerHTML = d.hero.subtitle.replace(/\n/g,'<br>');
         }
 
-        // Intro
         if(d.intro){
           var ps = document.querySelectorAll('.intro__inner p');
           if(d.intro.paragraph1 && ps[0]) ps[0].textContent = d.intro.paragraph1;
           if(d.intro.paragraph2 && ps[1]) ps[1].textContent = d.intro.paragraph2;
         }
 
-        // Reel
         if(d.reel){
           var frame = document.querySelector('.reel__frame');
           if(d.reel.vimeo_id) frame.setAttribute('data-vimeo-id', d.reel.vimeo_id);
+          frame.setAttribute('data-loop', d.reel.video_loop ? 'true' : 'false');
           if(d.reel.poster) document.querySelector('.reel__poster').src = d.reel.poster;
         }
 
-        // Servizi
         if(d.services && d.services.length){
           document.querySelector('.services__list').innerHTML = d.services.map(function(s){
-            var cls = s.startsWith('+') ? ' class="accent"' : '';
-            return '<li'+cls+'>'+s+'</li>';
+            return '<li'+(s.startsWith('+') ? ' class="accent"' : '')+'>'+s+'</li>';
           }).join('');
         }
 
-        // Gallery
-        if(d.gallery && d.gallery.length){
-          var wrapper = document.querySelector('.gallery .swiper-wrapper');
-          wrapper.innerHTML = d.gallery.map(function(src, i){
-            return '<div class="swiper-slide"><img src="'+src+'" alt="Lavoro '+(i+1)+'"></div>';
-          }).join('');
-          gallerySwiper.destroy(true, true);
-          gallerySwiper = new Swiper('.gallery .swiper', {
-            loop: true, speed: 600,
-            pagination: { el: '.swiper-pagination', clickable: true },
-            navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
-          });
+        if(d.gallery){
+          initGallery(d.gallery.images || null, !!d.gallery.autoplay);
         }
 
-        // Footer
         if(d.footer){
           var f = d.footer;
           if(f.name) document.querySelector('.footer__name').textContent = f.name;
           if(f.role) document.querySelector('.footer__role').textContent = f.role;
           var cols = document.querySelectorAll('.footer__links > div');
-          if(cols[0] && f.email){
-            cols[0].innerHTML =
-              (f.location||'Milano based')+'<br>'+
-              '<a href="mailto:'+f.email+'">'+f.email+'</a>';
-          }
-          if(cols[1] && f.linkedin){
-            cols[1].innerHTML = '<a href="'+f.linkedin+'" target="_blank" rel="noopener">LinkedIn</a>';
-          }
+          if(cols[0] && f.email) cols[0].innerHTML = '<a href="mailto:'+f.email+'">'+f.email+'</a>';
+          if(cols[1] && f.linkedin) cols[1].innerHTML = '<a href="'+f.linkedin+'" target="_blank" rel="noopener">LinkedIn</a>';
+          if(cols[2] && f.location) cols[2].textContent = f.location;
         }
 
       } catch(e){}

@@ -20,12 +20,13 @@ collections:
             name: hero
             widget: object
             fields:
-              - { label: "ID Vimeo (loop background)", name: video_id, widget: string, hint: "Solo il numero. Il video gira in loop senza audio né controlli." }
-              - { label: "Immagine fallback (se video assente)", name: image, widget: image }
-              - { label: Titolo (una riga per linea), name: title, widget: text }
-              - { label: Sottotitolo (una riga per linea), name: subtitle, widget: text }
+              - { label: "ID Vimeo (sfondo)", name: video_id, widget: string, hint: "Solo il numero, es. 1135024751" }
+              - { label: "Video in loop", name: video_loop, widget: boolean, default: true }
+              - { label: "Immagine fallback", name: image, widget: image, hint: "Mostrata se il video non è disponibile" }
+              - { label: "Titolo (una riga per linea)", name: title, widget: text }
+              - { label: "Sottotitolo (una riga per linea)", name: subtitle, widget: text }
 
-          - label: Intro — "Ciao!"
+          - label: "Intro — Ciao!"
             name: intro
             widget: object
             fields:
@@ -37,9 +38,10 @@ collections:
             widget: object
             fields:
               - { label: ID Vimeo, name: vimeo_id, widget: string, hint: "Solo il numero, es. 1135024751" }
-              - { label: Immagine poster (anteprima), name: poster, widget: image }
+              - { label: "Video in loop", name: video_loop, widget: boolean, default: false }
+              - { label: "Immagine poster (anteprima)", name: poster, widget: image }
 
-          - label: Cosa Faccio — lista servizi
+          - label: "Cosa Faccio — servizi"
             name: services
             widget: list
             label_singular: Servizio
@@ -47,16 +49,21 @@ collections:
               label: Voce
               name: item
               widget: string
-            hint: "L'ultima voce che inizia con + diventa viola"
+            hint: "La voce che inizia con + diventa viola"
 
-          - label: Gallery — immagini
+          - label: Gallery
             name: gallery
-            widget: list
-            label_singular: Immagine
-            field:
-              label: Immagine
-              name: image
-              widget: image
+            widget: object
+            fields:
+              - { label: "Slideshow automatico", name: autoplay, widget: boolean, default: false }
+              - label: Immagini
+                name: images
+                widget: list
+                label_singular: Immagine
+                field:
+                  label: Immagine
+                  name: image
+                  widget: image
 
           - label: Footer
             name: footer
@@ -64,6 +71,6 @@ collections:
             fields:
               - { label: Nome, name: name, widget: string }
               - { label: Ruolo, name: role, widget: string }
-              - { label: Città, name: location, widget: string }
               - { label: Email, name: email, widget: string }
               - { label: LinkedIn URL, name: linkedin, widget: string }
+              - { label: Città, name: location, widget: string }

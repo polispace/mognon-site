@@ -1,6 +1,7 @@
 {
   "hero": {
     "video_id": "1135024751",
+    "video_loop": true,
     "image": "assets/poster.jpg",
     "title": "Generative AI\n+ Motion Designer",
     "subtitle": "Produzione\nPost-produzione\nAnimazione\ndi contenuti multimediali statici e animati."
@@ -11,6 +12,7 @@
   },
   "reel": {
     "vimeo_id": "1135024751",
+    "video_loop": false,
     "poster": "assets/volcano.jpg"
   },
   "services": [
@@ -23,18 +25,21 @@
     "Contenuti Full Motion",
     "+Altro? Chiedimi!"
   ],
-  "gallery": [
-    "assets/gallery-1.jpg",
-    "assets/gallery-2.jpg",
-    "assets/gallery-3.jpg",
-    "assets/gallery-4.jpg",
-    "assets/gallery-5.jpg"
-  ],
+  "gallery": {
+    "autoplay": false,
+    "images": [
+      "assets/gallery-1.jpg",
+      "assets/gallery-2.jpg",
+      "assets/gallery-3.jpg",
+      "assets/gallery-4.jpg",
+      "assets/gallery-5.jpg"
+    ]
+  },
   "footer": {
     "name": "Marco Mognon",
     "role": "Generative AI Motion Designer",
-    "location": "Milano based",
     "email": "marcomognon2@gmail.com",
-    "linkedin": "https://www.linkedin.com/in/marco-mognon-244123b5/"
+    "linkedin": "https://www.linkedin.com/in/marco-mognon-244123b5/",
+    "location": "Milano based"
   }
 }
