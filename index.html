@@ -9,6 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 <style>
   :root{
     --cream:#FFF4D3;
@@ -196,9 +197,15 @@
 
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
   <script>
-    // Netlify Identity: redirect token hash → /admin/
-    if(/#(invite|confirmation|recovery|email_change)_token=/.test(window.location.hash)){
-      window.location = '/admin/' + window.location.hash;
+    // Netlify Identity: dopo login/invito → /admin/
+    if(window.netlifyIdentity){
+      window.netlifyIdentity.on('init', function(user){
+        if(!user){
+          window.netlifyIdentity.on('login', function(){
+            document.location.href = '/admin/';
+          });
+        }
+      });
     }
 
     // Hero video loop
