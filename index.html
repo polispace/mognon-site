@@ -178,8 +178,7 @@
     <h2 class="footer__name">Marco Mognon</h2>
     <p class="footer__role">Generative AI Motion Designer</p>
     <div class="footer__links">
-      <div><a href="https://sito.com">sito.com</a><br><a href="mailto:marcomognon2@gmail.com">marcomognon2@gmail.com</a></div>
-      <div>Milano based</div>
+      <div>Milano based<br><a href="mailto:marcomognon2@gmail.com">marcomognon2@gmail.com</a></div>
       <div><a href="https://www.linkedin.com/in/marco-mognon-244123b5/" target="_blank" rel="noopener">LinkedIn</a></div>
     </div>
     <p class="footer__copy">© 2026 All Rights Reserved</p>
@@ -278,12 +277,11 @@
           var cols = document.querySelectorAll('.footer__links > div');
           if(cols[0] && f.email){
             cols[0].innerHTML =
-              '<a href="'+(f.website_url||'#')+'">'+(f.website_label||f.website_url||'')+'</a><br>'+
+              (f.location||'Milano based')+'<br>'+
               '<a href="mailto:'+f.email+'">'+f.email+'</a>';
           }
-          if(cols[1] && f.location) cols[1].textContent = f.location;
-          if(cols[2] && f.linkedin){
-            cols[2].innerHTML = '<a href="'+f.linkedin+'" target="_blank" rel="noopener">LinkedIn</a>';
+          if(cols[1] && f.linkedin){
+            cols[1].innerHTML = '<a href="'+f.linkedin+'" target="_blank" rel="noopener">LinkedIn</a>';
           }
         }
 

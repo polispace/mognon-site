@@ -32,10 +32,8 @@
   "footer": {
     "name": "Marco Mognon",
     "role": "Generative AI Motion Designer",
-    "website_url": "https://sito.com",
-    "website_label": "sito.com",
+    "location": "Milano based",
     "email": "marcomognon2@gmail.com",
-    "linkedin": "https://www.linkedin.com/in/marco-mognon-244123b5/",
-    "location": "Milano based"
+    "linkedin": "https://www.linkedin.com/in/marco-mognon-244123b5/"
   }
 }
