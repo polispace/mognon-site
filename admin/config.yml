@@ -1,0 +1,70 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: assets
+public_folder: assets
+
+locale: it
+
+collections:
+  - name: content
+    label: Contenuto sito
+    files:
+      - name: site
+        label: Sito
+        file: content.json
+        fields:
+
+          - label: Hero
+            name: hero
+            widget: object
+            fields:
+              - { label: Immagine di sfondo, name: image, widget: image }
+              - { label: Titolo (una riga per line), name: title, widget: text }
+              - { label: Sottotitolo (una riga per linea), name: subtitle, widget: text }
+
+          - label: Intro — "Ciao!"
+            name: intro
+            widget: object
+            fields:
+              - { label: Paragrafo 1, name: paragraph1, widget: text }
+              - { label: Paragrafo 2, name: paragraph2, widget: text }
+
+          - label: Reel video
+            name: reel
+            widget: object
+            fields:
+              - { label: ID Vimeo, name: vimeo_id, widget: string, hint: "Solo il numero, es. 1135024751" }
+              - { label: Immagine poster (anteprima), name: poster, widget: image }
+
+          - label: Cosa Faccio — lista servizi
+            name: services
+            widget: list
+            label_singular: Servizio
+            field:
+              label: Voce
+              name: item
+              widget: string
+            hint: "L'ultima voce che inizia con + diventa viola"
+
+          - label: Gallery — immagini
+            name: gallery
+            widget: list
+            label_singular: Immagine
+            field:
+              label: Immagine
+              name: image
+              widget: image
+
+          - label: Footer
+            name: footer
+            widget: object
+            fields:
+              - { label: Nome, name: name, widget: string }
+              - { label: Ruolo, name: role, widget: string }
+              - { label: Sito — URL, name: website_url, widget: string }
+              - { label: Sito — testo visualizzato, name: website_label, widget: string }
+              - { label: Email, name: email, widget: string }
+              - { label: LinkedIn URL, name: linkedin, widget: string }
+              - { label: Città, name: location, widget: string }

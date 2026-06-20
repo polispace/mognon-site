@@ -36,8 +36,7 @@
   /* ---------- HERO ---------- */
   .hero{position:relative;min-height:86vh;display:flex;align-items:flex-end;overflow:hidden;background:#7a6f8e}
   .hero__bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 20%}
-  .hero::after{content:"";position:absolute;inset:0;pointer-events:none;
-    background:rgba(0,0,0,0.4)}
+  .hero::after{content:"";position:absolute;inset:0;pointer-events:none;background:rgba(0,0,0,0.4)}
   .hero__content{position:relative;z-index:1;color:var(--hero-fg);padding:0 5.5% 8%;max-width:42rem;
     text-shadow:0 1px 26px rgba(8,6,28,.32)}
   .hero__title{font-weight:400;line-height:.95;letter-spacing:-0.06em;font-size:clamp(2.05rem,8.4vw,4.75rem)}
@@ -50,15 +49,15 @@
   .intro p{font-weight:400;line-height:1.35;letter-spacing:-0.02em;font-size:clamp(.95rem,3.6vw,1.125rem)}
   .intro p+p{margin-top:1.25em}
 
-  /* ---------- REEL (video band) ---------- */
+  /* ---------- REEL ---------- */
   .reel{background:var(--cream)}
   .reel__frame{position:relative;width:100%;aspect-ratio:5/4;background:#0a0a0a;overflow:hidden;cursor:pointer;border:0;display:block;padding:0}
   .reel__poster{width:100%;height:100%;object-fit:cover;object-position:center}
   .reel__play{
     position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
     width:74px;height:74px;border-radius:50%;border:1.5px solid rgba(255,255,255,.9);
-    background:rgba(10,10,10,.32);color:#fff;backdrop-filter:blur(2px);
-    display:grid;place-items:center;cursor:pointer;transition:transform .2s ease,background .2s ease
+    background:rgba(10,10,10,.32);backdrop-filter:blur(2px);
+    display:grid;place-items:center;transition:transform .2s ease,background .2s ease
   }
   .reel__play::before{content:"";display:block;width:0;height:0;margin-left:4px;
     border-left:16px solid #fff;border-top:11px solid transparent;border-bottom:11px solid transparent}
@@ -68,23 +67,19 @@
   /* ---------- SERVICES ---------- */
   .services{background:var(--peri);color:var(--list);padding:clamp(4rem,12%,10rem) var(--gutter)}
   .services__label{font-weight:500;font-size:clamp(.95rem,3.6vw,2rem);letter-spacing:-0.05em;line-height:1.09;margin-bottom:1.5em}
-  .services__list{list-style:none;font-weight:400;line-height:.95;letter-spacing:-0.06em;
-    font-size:clamp(2rem,8.8vw,4.75rem)}
+  .services__list{list-style:none;font-weight:400;line-height:.95;letter-spacing:-0.06em;font-size:clamp(2rem,8.8vw,4.75rem)}
   .services__list .accent{color:var(--violet)}
 
-  /* ---------- GALLERY (Swiper) ---------- */
+  /* ---------- GALLERY ---------- */
   .gallery{width:100%;aspect-ratio:4/5;overflow:hidden;background:#0a0a0a;position:relative}
   .gallery .swiper{width:100%;height:100%}
   .gallery .swiper-slide img{width:100%;height:100%;object-fit:cover;object-position:center}
   .gallery .swiper-button-prev,
   .gallery .swiper-button-next{
-    color:#fff;
-    --swiper-navigation-size:20px;
-    width:44px;height:44px;
-    border-radius:50%;
+    color:#fff;--swiper-navigation-size:20px;
+    width:44px;height:44px;border-radius:50%;
     border:1px solid rgba(255,255,255,.5);
-    background:rgba(0,0,0,.3);
-    backdrop-filter:blur(4px);
+    background:rgba(0,0,0,.3);backdrop-filter:blur(4px);
   }
   .gallery .swiper-button-prev::after,
   .gallery .swiper-button-next::after{font-size:14px;font-weight:700}
@@ -95,8 +90,7 @@
   .footer{background:var(--cream);padding:clamp(4rem,12%,9rem) var(--gutter) clamp(2.5rem,6%,4.5rem)}
   .footer__name{font-weight:500;font-size:clamp(1.35rem,5vw,2rem);letter-spacing:-0.05em;line-height:1.09}
   .footer__role{margin-top:1.5em;font-size:clamp(.95rem,3.6vw,1.125rem);letter-spacing:-0.02em;line-height:1.35}
-  .footer__links{margin-top:3.4em;display:flex;flex-direction:column;gap:1.5em;
-    font-size:.875rem;line-height:1.4}
+  .footer__links{margin-top:3.4em;display:flex;flex-direction:column;gap:1.5em;font-size:.875rem;line-height:1.4}
   .footer__copy{margin-top:3.6em;font-size:.9rem}
 
   /* ---------- TABLET ---------- */
@@ -193,30 +187,108 @@
 
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
   <script>
-    new Swiper('.gallery .swiper', {
+    // Swiper init
+    var gallerySwiper = new Swiper('.gallery .swiper', {
       loop: true,
       speed: 600,
       pagination: { el: '.swiper-pagination', clickable: true },
       navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
     });
 
+    // Vimeo player
     document.querySelectorAll('.reel__frame').forEach(function(frame){
       function play(){
-        var id=frame.getAttribute('data-vimeo-id');
+        var id = frame.getAttribute('data-vimeo-id');
         if(!id) return;
-        var ifr=document.createElement('iframe');
-        ifr.className='reel__iframe';
-        ifr.src='https://player.vimeo.com/video/'+id+'?autoplay=1&title=0&byline=0&portrait=0';
-        ifr.allow='autoplay; fullscreen; picture-in-picture';
+        var ifr = document.createElement('iframe');
+        ifr.className = 'reel__iframe';
+        ifr.src = 'https://player.vimeo.com/video/'+id+'?autoplay=1&title=0&byline=0&portrait=0';
+        ifr.allow = 'autoplay; fullscreen; picture-in-picture';
         ifr.setAttribute('allowfullscreen','');
-        frame.innerHTML='';
+        frame.innerHTML = '';
         frame.appendChild(ifr);
       }
-      frame.addEventListener('click',play);
-      frame.addEventListener('keydown',function(e){
-        if(e.key==='Enter'||e.key===' '){e.preventDefault();play();}
+      frame.addEventListener('click', play);
+      frame.addEventListener('keydown', function(e){
+        if(e.key==='Enter'||e.key===' '){ e.preventDefault(); play(); }
       });
     });
+
+    // CMS content loader — aggiorna il DOM da content.json senza ricaricare la pagina
+    (async function(){
+      try {
+        var r = await fetch('content.json');
+        if(!r.ok) return;
+        var d = await r.json();
+
+        // Hero
+        if(d.hero){
+          if(d.hero.image) document.querySelector('.hero__bg').src = d.hero.image;
+          if(d.hero.title){
+            document.querySelector('.hero__title').innerHTML =
+              d.hero.title.split('\n').join('<br>');
+          }
+          if(d.hero.subtitle){
+            document.querySelector('.hero__sub').innerHTML =
+              d.hero.subtitle.replace(/\n/g,'<br>');
+          }
+        }
+
+        // Intro
+        if(d.intro){
+          var ps = document.querySelectorAll('.intro__inner p');
+          if(d.intro.paragraph1 && ps[0]) ps[0].textContent = d.intro.paragraph1;
+          if(d.intro.paragraph2 && ps[1]) ps[1].textContent = d.intro.paragraph2;
+        }
+
+        // Reel
+        if(d.reel){
+          var frame = document.querySelector('.reel__frame');
+          if(d.reel.vimeo_id) frame.setAttribute('data-vimeo-id', d.reel.vimeo_id);
+          if(d.reel.poster) document.querySelector('.reel__poster').src = d.reel.poster;
+        }
+
+        // Servizi
+        if(d.services && d.services.length){
+          document.querySelector('.services__list').innerHTML = d.services.map(function(s){
+            var cls = s.startsWith('+') ? ' class="accent"' : '';
+            return '<li'+cls+'>'+s+'</li>';
+          }).join('');
+        }
+
+        // Gallery
+        if(d.gallery && d.gallery.length){
+          var wrapper = document.querySelector('.gallery .swiper-wrapper');
+          wrapper.innerHTML = d.gallery.map(function(src, i){
+            return '<div class="swiper-slide"><img src="'+src+'" alt="Lavoro '+(i+1)+'"></div>';
+          }).join('');
+          gallerySwiper.destroy(true, true);
+          gallerySwiper = new Swiper('.gallery .swiper', {
+            loop: true, speed: 600,
+            pagination: { el: '.swiper-pagination', clickable: true },
+            navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
+          });
+        }
+
+        // Footer
+        if(d.footer){
+          var f = d.footer;
+          if(f.name) document.querySelector('.footer__name').textContent = f.name;
+          if(f.role) document.querySelector('.footer__role').textContent = f.role;
+          var cols = document.querySelectorAll('.footer__links > div');
+          if(cols[0] && f.email){
+            cols[0].innerHTML =
+              '<a href="'+(f.website_url||'#')+'">'+(f.website_label||f.website_url||'')+'</a><br>'+
+              '<a href="mailto:'+f.email+'">'+f.email+'</a>';
+          }
+          if(cols[1] && f.location) cols[1].textContent = f.location;
+          if(cols[2] && f.linkedin){
+            cols[2].innerHTML = '<a href="'+f.linkedin+'" target="_blank" rel="noopener">LinkedIn</a>';
+          }
+        }
+
+      } catch(e){}
+    })();
   </script>
 </body>
 </html>

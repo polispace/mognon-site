@@ -1,0 +1,41 @@
+{
+  "hero": {
+    "image": "assets/poster.jpg",
+    "title": "Generative AI\n+ Motion Designer",
+    "subtitle": "Produzione\nPost-produzione\nAnimazione\ndi contenuti multimediali statici e animati."
+  },
+  "intro": {
+    "paragraph1": "Mi chiamo Marco Mognon, sono un motion designer.",
+    "paragraph2": "Utilizzo Workflow Ibridi che combinano AI Generativa e Software di Grafica e Animazione per sviluppare contenuti visivi, dagli still life alle produzioni full motion."
+  },
+  "reel": {
+    "vimeo_id": "1135024751",
+    "poster": "assets/volcano.jpg"
+  },
+  "services": [
+    "Motion Design",
+    "Visual Storytelling",
+    "Generative AI",
+    "Art Direction",
+    "Still Life",
+    "Progetti Digitali",
+    "Contenuti Full Motion",
+    "+Altro? Chiedimi!"
+  ],
+  "gallery": [
+    "assets/gallery-1.jpg",
+    "assets/gallery-2.jpg",
+    "assets/gallery-3.jpg",
+    "assets/gallery-4.jpg",
+    "assets/gallery-5.jpg"
+  ],
+  "footer": {
+    "name": "Marco Mognon",
+    "role": "Generative AI Motion Designer",
+    "website_url": "https://sito.com",
+    "website_label": "sito.com",
+    "email": "marcomognon2@gmail.com",
+    "linkedin": "https://www.linkedin.com/in/marco-mognon-244123b5/",
+    "location": "Milano based"
+  }
+}
