@@ -29,7 +29,8 @@
   "gallery": {
     "autoplay": false,
     "images": [
-      "assets/shooting-sito.png"
+      "assets/shooting-sito.png",
+      "assets/shooting-sito2.png"
     ]
   },
   "brands": {
