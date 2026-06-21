@@ -29,18 +29,18 @@
   "gallery": {
     "autoplay": false,
     "images": [
-      "assets/shooting-sito.png",
-      "assets/shooting-sito2.png",
-      "assets/shooting-sito_2_2.png",
-      "assets/shooting-sito4.png",
-      "assets/shooting-sito5.png",
-      "assets/shooting-sito7.png",
-      "assets/shooting-sito_2_4.png",
-      "assets/shooting-sito_3_.png",
-      "assets/shooting-sito_3_2.png",
-      "assets/shooting-sito_3_3.png",
-      "assets/shooting-sito_3_4.png",
-      "assets/shooting-sito_3_5.png"
+      "assets/shooting-sito.jpg",
+      "assets/shooting-sito2.jpg",
+      "assets/shooting-sito_2_2.jpg",
+      "assets/shooting-sito4.jpg",
+      "assets/shooting-sito5.jpg",
+      "assets/shooting-sito7.jpg",
+      "assets/shooting-sito_2_4.jpg",
+      "assets/shooting-sito_3_.jpg",
+      "assets/shooting-sito_3_2.jpg",
+      "assets/shooting-sito_3_3.jpg",
+      "assets/shooting-sito_3_4.jpg",
+      "assets/shooting-sito_3_5.jpg"
     ]
   },
   "brands": {

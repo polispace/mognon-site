@@ -24,7 +24,7 @@ collections:
             fields:
               - { label: "ID Vimeo (sfondo)", name: video_id, widget: string, hint: "Solo il numero, es. 1135024751" }
               - { label: "Video in loop", name: video_loop, widget: boolean, default: true }
-              - { label: "Immagine fallback", name: image, widget: image, hint: "Mostrata se il video non è disponibile" }
+              - { label: "Immagine fallback", name: image, widget: image, hint: "Mostrata se il video non è disponibile. Usa un'immagine leggera (max ~1920px, < ~1 MB)." }
               - { label: "Titolo (una riga per linea)", name: title, widget: text }
               - { label: "Sottotitolo (una riga per linea)", name: subtitle, widget: text }
 
@@ -63,6 +63,7 @@ collections:
                 name: images
                 widget: list
                 label_singular: Immagine
+                hint: "⚠️ Carica immagini web leggere (lato lungo max ~1920px, sotto ~1 MB, meglio JPG). File troppo pesanti possono dare 'Failed to fetch' nel salvataggio: in quel caso ricarica più piccolo."
                 field:
                   label: Immagine
                   name: image
