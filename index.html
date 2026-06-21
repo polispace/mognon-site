@@ -71,6 +71,9 @@
     border-left:16px solid #fff;border-top:11px solid transparent;border-bottom:11px solid transparent}
   .reel__frame:hover .reel__play{transform:translate(-50%,-50%) scale(1.06);background:rgba(10,10,10,.5)}
   .reel__iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+  /* reel in autoplay: banda video 16:9, niente play/poster */
+  .reel__frame.reel__frame--video-bg{aspect-ratio:16/9;cursor:default}
+  .reel__frame--video-bg .reel__play{display:none}
 
   /* ---------- SERVICES ---------- */
   .services{background:var(--peri);color:var(--list);padding:clamp(4rem,12%,10rem) var(--gutter)}
@@ -93,6 +96,15 @@
   .gallery .swiper-button-next::after{font-size:14px;font-weight:700}
   .gallery .swiper-pagination-bullet{background:#fff;opacity:.6}
   .gallery .swiper-pagination-bullet-active{opacity:1}
+
+  /* ---------- BRANDS ---------- */
+  .brands{background:#0a0a0a;color:var(--hero-fg);padding:clamp(4rem,12%,8rem) var(--gutter)}
+  .brands__label{font-weight:500;font-size:clamp(.95rem,3.6vw,2rem);letter-spacing:-0.05em;line-height:1.09;margin-bottom:clamp(2.2rem,7%,4rem)}
+  .brands__grid{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:clamp(1.8rem,5vw,3.2rem) clamp(2rem,6vw,4rem)}
+  /* loghi singoli: altezza uniforme + resi bianchi per un muro omogeneo */
+  .brands__grid img{height:clamp(24px,5.5vw,40px);width:auto;object-fit:contain;filter:brightness(0) invert(1);opacity:.9}
+  /* immagine unica provvisoria: a piena larghezza, già bianca su nero */
+  .brands__grid img.brands__full{height:auto;width:auto;max-width:100%;filter:none;opacity:1}
 
   /* ---------- FOOTER ---------- */
   .footer{background:var(--cream);padding:clamp(4rem,12%,9rem) var(--gutter) clamp(2.5rem,6%,4.5rem)}
@@ -147,7 +159,7 @@
 
   <section class="reel" aria-label="Showreel">
     <div class="reel__frame" role="button" tabindex="0"
-         data-vimeo-id="1135024751" data-loop="false" aria-label="Riproduci il video">
+         data-vimeo-id="1135024751" data-loop="true" data-autoplay="true" aria-label="Riproduci il video">
       <img class="reel__poster" src="" alt="Anteprima del video" style="opacity:0;transition:opacity .4s">
       <span class="reel__play" aria-hidden="true"></span>
     </div>
@@ -179,6 +191,13 @@
       <div class="swiper-button-prev"></div>
       <div class="swiper-button-next"></div>
       <div class="swiper-pagination"></div>
+    </div>
+  </section>
+
+  <section class="brands" aria-label="Brand">
+    <p class="brands__label">Brand per cui ho lavorato</p>
+    <div class="brands__grid">
+      <img class="brands__full" src="assets/brands-logos.png" alt="Brand per cui ho lavorato" loading="lazy">
     </div>
   </section>
 
@@ -238,9 +257,30 @@
     }
     initGallery(null, false);
 
-    // Reel: click-to-play, loop controllato da data-loop
+    // Reel: autoplay (background) oppure click-to-play, loop da data-loop
     document.querySelectorAll('.reel__frame').forEach(function(frame){
+      // autoplay: video di sfondo muto, niente poster/play (come l'hero)
+      function autoBg(){
+        if(frame.querySelector('.reel__iframe')) return;   // già attivo
+        var id   = frame.getAttribute('data-vimeo-id');
+        var loop = frame.getAttribute('data-loop') === 'true';
+        if(!id) return;
+        var ifr = document.createElement('iframe');
+        ifr.className = 'reel__iframe';
+        ifr.src = 'https://player.vimeo.com/video/'+id+'?'+(loop
+          ? 'background=1'
+          : 'autoplay=1&muted=1&loop=0&controls=0&title=0&byline=0&portrait=0');
+        ifr.allow = 'autoplay; fullscreen; picture-in-picture';
+        ifr.setAttribute('allowfullscreen','');
+        frame.classList.add('reel__frame--video-bg');
+        frame.innerHTML = '';
+        frame.appendChild(ifr);
+        frame.removeAttribute('role');
+        frame.removeAttribute('tabindex');
+      }
+      // click-to-play: player con audio e controlli al click
       function play(){
+        if(frame.getAttribute('data-autoplay') === 'true') return;
         var id   = frame.getAttribute('data-vimeo-id');
         var loop = frame.getAttribute('data-loop') === 'true';
         if(!id) return;
@@ -253,10 +293,14 @@
         frame.innerHTML = '';
         frame.appendChild(ifr);
       }
+      frame.setupReel = function(){
+        if(frame.getAttribute('data-autoplay') === 'true') autoBg();
+      };
       frame.addEventListener('click', play);
       frame.addEventListener('keydown', function(e){
         if(e.key==='Enter'||e.key===' '){ e.preventDefault(); play(); }
       });
+      frame.setupReel();   // applica i default dell'HTML
     });
 
     // CMS content loader
@@ -287,7 +331,10 @@
           var frame = document.querySelector('.reel__frame');
           if(d.reel.vimeo_id) frame.setAttribute('data-vimeo-id', d.reel.vimeo_id);
           frame.setAttribute('data-loop', d.reel.video_loop ? 'true' : 'false');
-          if(d.reel.poster){
+          frame.setAttribute('data-autoplay', d.reel.autoplay ? 'true' : 'false');
+          if(d.reel.autoplay){
+            if(frame.setupReel) frame.setupReel();
+          } else if(d.reel.poster){
             var poster = document.querySelector('.reel__poster');
             poster.onload = function(){ poster.style.opacity = '1'; };
             poster.src = d.reel.poster;
@@ -302,6 +349,25 @@
 
         if(d.gallery){
           initGallery(d.gallery.images || null, !!d.gallery.autoplay);
+        }
+
+        if(d.brands){
+          var bsec = document.querySelector('.brands');
+          if(d.brands.label) document.querySelector('.brands__label').textContent = d.brands.label;
+          var bgrid = document.querySelector('.brands__grid');
+          if(d.brands.logos && d.brands.logos.length){
+            // loghi singoli → griglia monocromatica
+            bgrid.innerHTML = d.brands.logos.map(function(src){
+              return '<img src="'+src+'" alt="" loading="lazy">';
+            }).join('');
+            bsec.style.display = '';
+          } else if(d.brands.image){
+            // immagine unica provvisoria
+            bgrid.innerHTML = '<img class="brands__full" src="'+d.brands.image+'" alt="Brand per cui ho lavorato" loading="lazy">';
+            bsec.style.display = '';
+          } else {
+            bsec.style.display = 'none';
+          }
         }
 
         if(d.footer){

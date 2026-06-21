@@ -12,6 +12,7 @@
   },
   "reel": {
     "vimeo_id": "1135024751",
+    "autoplay": true,
     "video_loop": true,
     "poster": "assets/volcano.jpg"
   },
@@ -41,6 +42,11 @@
       "assets/shooting-sito_3_4.png",
       "assets/shooting-sito_3_5.png"
     ]
+  },
+  "brands": {
+    "label": "Brand per cui ho lavorato",
+    "logos": [],
+    "image": "assets/brands-logos.png"
   },
   "footer": {
     "name": "Marco Mognon",

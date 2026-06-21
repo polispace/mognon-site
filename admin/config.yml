@@ -40,8 +40,9 @@ collections:
             widget: object
             fields:
               - { label: ID Vimeo, name: vimeo_id, widget: string, hint: "Solo il numero, es. 1135024751" }
-              - { label: "Video in loop", name: video_loop, widget: boolean, default: false }
-              - { label: "Immagine poster (anteprima)", name: poster, widget: image }
+              - { label: "Partenza automatica (muto, senza tasto play)", name: autoplay, widget: boolean, default: true }
+              - { label: "Video in loop", name: video_loop, widget: boolean, default: true }
+              - { label: "Immagine poster (usata solo se partenza automatica è OFF)", name: poster, widget: image }
 
           - label: "Cosa Faccio — servizi"
             name: services
@@ -66,6 +67,20 @@ collections:
                   label: Immagine
                   name: image
                   widget: image
+
+          - label: "Brand — loghi"
+            name: brands
+            widget: object
+            fields:
+              - { label: "Etichetta", name: label, widget: string, default: "Brand per cui ho lavorato" }
+              - label: "Loghi singoli (consigliato: SVG o PNG trasparente)"
+                name: logos
+                widget: list
+                label_singular: Logo
+                required: false
+                hint: "Vengono resi tutti bianchi e allineati automaticamente. Se vuoto, viene usata l'immagine unica qui sotto."
+                field: { label: Logo, name: logo, widget: image }
+              - { label: "Immagine unica provvisoria", name: image, widget: image, required: false, hint: "Mostrata solo se non carichi loghi singoli" }
 
           - label: Footer
             name: footer
