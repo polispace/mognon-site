@@ -45,7 +45,25 @@
   },
   "brands": {
     "label": "Brand per cui ho lavorato",
-    "logos": [],
+    "logos": [
+      "assets/logos/bmw.svg",
+      "assets/logos/burger-king.svg",
+      "assets/logos/cerave.svg",
+      "assets/logos/cinzano.svg",
+      "assets/logos/db-group.svg",
+      "assets/logos/hilti.svg",
+      "assets/logos/kerastase.svg",
+      "assets/logos/la-roche-posay.svg",
+      "assets/logos/linaro.svg",
+      "assets/logos/mail-boxes-etc.svg",
+      "assets/logos/mediolanum.svg",
+      "assets/logos/mini.svg",
+      "assets/logos/plenitude.svg",
+      "assets/logos/samsung.svg",
+      "assets/logos/sephora.svg",
+      "assets/logos/vichy.svg",
+      "assets/logos/zuegg.svg"
+    ],
     "image": "assets/brands-logos.png"
   },
   "footer": {

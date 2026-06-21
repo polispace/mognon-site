@@ -74,13 +74,13 @@ collections:
             widget: object
             fields:
               - { label: "Etichetta", name: label, widget: string, default: "Brand per cui ho lavorato" }
-              - label: "Loghi singoli (consigliato: SVG o PNG trasparente)"
+              - label: "Loghi singoli (SVG o PNG trasparente)"
                 name: logos
                 widget: list
                 label_singular: Logo
                 required: false
-                hint: "Vengono resi tutti bianchi e allineati automaticamente. Se vuoto, viene usata l'immagine unica qui sotto."
-                field: { label: Logo, name: logo, widget: image }
+                hint: "Vengono resi tutti bianchi e allineati automaticamente. Usa SVG con sfondo trasparente (no emblemi con testo in negativo, che diventano una macchia bianca)."
+                field: { label: Logo, name: logo, widget: image, media_folder: "/assets/logos", public_folder: "/assets/logos" }
               - { label: "Immagine unica provvisoria", name: image, widget: image, required: false, hint: "Mostrata solo se non carichi loghi singoli" }
 
           - label: Footer
