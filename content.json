@@ -29,7 +29,8 @@
   "gallery": {
     "autoplay": false,
     "images": [
-      "assets/gallery-1.jpg"
+      "assets/gallery-1.jpg",
+      "assets/gallery-2.jpg"
     ]
   },
   "brands": {
