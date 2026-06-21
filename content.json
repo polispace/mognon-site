@@ -29,20 +29,7 @@
   "gallery": {
     "autoplay": false,
     "images": [
-      "assets/shooting-sito.png",
-      "assets/shooting-sito2.png",
-      "assets/shooting-sito3.png",
-      "assets/shooting-sito4.png",
-      "assets/shooting-sito5.png",
-      "assets/shooting-sito6.png",
-      "assets/shooting-sito7.png",
-      "assets/shooting-sito8.png",
-      "assets/shooting-sito9.png",
-      "assets/shooting-sito10.png",
-      "assets/shooting-sito11.png",
-      "assets/shooting-sito12.png",
-      "assets/shooting-sito13.png",
-      "assets/shooting-sito14.png"
+      "assets/shooting-sito.png"
     ]
   },
   "brands": {
