@@ -102,14 +102,12 @@
   .brands__label{font-weight:500;font-size:clamp(.95rem,3.6vw,2rem);letter-spacing:-0.05em;line-height:1.09;margin-bottom:clamp(2.4rem,7%,4.2rem)}
   /* loghi: flex centrato che va a capo. Ogni logo entra in un box (max-w × max-h):
      gli emblemi quadrati si fermano sull'altezza, i wordmark larghi sulla larghezza → equilibrio.
-     filter:invert(1) = bianco↔nero per il fondo scuro (i grigi restano grigi). Niente classi per-logo
-     così i nuovi loghi caricati da Marco si bilanciano da soli. */
+     NESSUN filtro: gli SVG sono già bianchi/grigi per il fondo scuro (WYSIWYG). Niente classi per-logo
+     così i nuovi loghi caricati da Marco si bilanciano e si mostrano esattamente come sono. */
   .brands__grid{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;
     gap:clamp(2.4rem,6vw,3.6rem) clamp(2.6rem,6vw,4rem)}
   .brands__grid img{flex:0 0 auto;width:auto;height:auto;max-width:118px;max-height:46px;
-    object-fit:contain;filter:invert(1)}
-  /* AIA è già disegnato per il fondo scuro (scudo grigio + testo bianco) → non invertire */
-  .brands__grid img[src*="aia"]{filter:none}
+    object-fit:contain}
   /* immagine unica (fallback / override da Figma): a piena larghezza, già pensata per il fondo scuro */
   .brands__grid img.brands__full{max-width:100%;max-height:none;filter:none;mix-blend-mode:screen}
 

@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg id="Livello_2" data-name="Livello 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+<svg fill="#fff" id="Livello_2" data-name="Livello 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
   <defs>
     <style>
       .cls-1, .cls-2 {
-        stroke: #000;
+        stroke: #fff;
         stroke-miterlimit: 10;
         stroke-width: 1.42px;
       }
 
       .cls-2 {
-        fill: #fff;
+        fill: #000;
       }
     </style>
   </defs>
