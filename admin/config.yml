@@ -69,6 +69,8 @@ collections:
                   name: image
                   widget: image
 
+          - { label: "Crediti foto (striscia gialla)", name: credits, widget: string, required: false, hint: "Testo crediti mostrato tra gallery e brand. Lascia vuoto per nasconderlo." }
+
           - label: "Brand — loghi"
             name: brands
             widget: object
