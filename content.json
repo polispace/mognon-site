@@ -29,9 +29,14 @@
   "gallery": {
     "autoplay": false,
     "images": [
-      { "image": "assets/gallery-1.jpg", "credit": "© Marco Mognon — AI-generated visuals" },
-      { "image": "assets/gallery-2.jpg", "credit": "© Marco Mognon — AI-generated visuals" },
-      { "image": "assets/shooting-sito_uso-label.png", "credit": "© Marco Mognon — AI-generated visuals" }
+      {
+        "image": "assets/gallery-1.jpg",
+        "credit": "© Marco Mognon — AI-generated visuals"
+      },
+      {
+        "image": "assets/gallery-2.jpg",
+        "credit": "© Marco Mognon — AI-generated visuals"
+      }
     ]
   },
   "brands": {
