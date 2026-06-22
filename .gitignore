@@ -2,3 +2,6 @@
 .claude/
 Asset/
 *.zip
+
+index_qa.html
+assets/logos/_*.html
