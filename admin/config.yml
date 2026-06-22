@@ -63,27 +63,24 @@ collections:
                 name: images
                 widget: list
                 label_singular: Immagine
-                hint: "⚠️ Carica immagini web leggere (lato lungo max ~1920px, sotto ~1 MB, meglio JPG). File troppo pesanti possono dare 'Failed to fetch' nel salvataggio: in quel caso ricarica più piccolo."
-                field:
-                  label: Immagine
-                  name: image
-                  widget: image
-
-          - { label: "Crediti foto (striscia gialla)", name: credits, widget: string, required: false, hint: "Testo crediti mostrato tra gallery e brand. Lascia vuoto per nasconderlo." }
+                hint: "⚠️ Immagini web leggere (lato lungo max ~1920px, sotto ~1 MB, meglio JPG). Il credito appare nella striscia gialla sotto, sincronizzato con la slide mostrata."
+                fields:
+                  - { label: Immagine, name: image, widget: image }
+                  - { label: "Credito foto", name: credit, widget: string, default: "© Marco Mognon — AI-generated visuals", required: false, hint: "Mostrato nella striscia sotto la gallery quando questa immagine è visibile. Vuoto = striscia nascosta per questa slide." }
 
           - label: "Brand — loghi"
             name: brands
             widget: object
             fields:
               - { label: "Etichetta", name: label, widget: string, default: "Brand per cui ho lavorato" }
-              - label: "Loghi singoli (SVG o PNG trasparente)"
+              - { label: "Immagine unica dei loghi (consigliato)", name: image, widget: image, required: false, hint: "Se carichi un'immagine qui (es. la griglia loghi fatta da te in Figma), SOSTITUISCE i loghi singoli sotto. È il modo più semplice e sicuro per gestire i loghi da solo." }
+              - label: "Loghi singoli (avanzato)"
                 name: logos
                 widget: list
                 label_singular: Logo
                 required: false
-                hint: "Vengono resi tutti bianchi e allineati automaticamente. Usa SVG con sfondo trasparente (no emblemi con testo in negativo, che diventano una macchia bianca)."
+                hint: "Usato solo se NON carichi l'immagine unica sopra. Vengono resi bianchi e allineati: funziona bene solo con SVG monocromatici a sfondo trasparente. Loghi colorati, con sfondo o emblemi col testo in negativo possono venire male."
                 field: { label: Logo, name: logo, widget: image, media_folder: "/assets/logos", public_folder: "/assets/logos" }
-              - { label: "Immagine unica provvisoria", name: image, widget: image, required: false, hint: "Mostrata solo se non carichi loghi singoli" }
 
           - label: Footer
             name: footer

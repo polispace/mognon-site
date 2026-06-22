@@ -29,14 +29,14 @@
   "gallery": {
     "autoplay": false,
     "images": [
-      "assets/gallery-1.jpg",
-      "assets/gallery-2.jpg",
-      "assets/shooting-sito_uso-label.png"
+      { "image": "assets/gallery-1.jpg", "credit": "© Marco Mognon — AI-generated visuals" },
+      { "image": "assets/gallery-2.jpg", "credit": "© Marco Mognon — AI-generated visuals" },
+      { "image": "assets/shooting-sito_uso-label.png", "credit": "© Marco Mognon — AI-generated visuals" }
     ]
   },
-  "credits": "Crediti foto: —",
   "brands": {
     "label": "Brand per cui ho lavorato",
+    "image": "",
     "logos": [
       "assets/logos/bmw.svg",
       "assets/logos/burger-king.svg",
@@ -56,8 +56,7 @@
       "assets/logos/sephora.svg",
       "assets/logos/vichy.svg",
       "assets/logos/zuegg.svg"
-    ],
-    "image": "assets/brands-logos.png"
+    ]
   },
   "footer": {
     "name": "Marco Mognon",

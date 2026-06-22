@@ -215,7 +215,7 @@
   </section>
 
   <section class="credits" aria-label="Crediti foto">
-    <p class="credits__text">Crediti foto: —</p>
+    <p class="credits__text">© Marco Mognon — AI-generated visuals</p>
   </section>
 
   <section class="brands" aria-label="Brand">
@@ -278,13 +278,24 @@
     }
     initHeroVideo('1135024751', true);
 
-    // Gallery Swiper: autoplay=true → avanza da solo ogni 4s
-    var gallerySwiper;
-    function initGallery(images, autoplay){
-      if(images){
+    // Gallery Swiper: autoplay=true → avanza da solo ogni 4s · crediti sincronizzati con la slide
+    var gallerySwiper, galleryCredits = [];
+    function srcOf(it){ return (typeof it === 'string') ? it : (it && it.image); }
+    function creditOf(it){ return (typeof it === 'string') ? '' : ((it && it.credit) || ''); }
+    function showCredit(i){
+      var sec = document.querySelector('.credits');
+      var el  = document.querySelector('.credits__text');
+      if(!sec || !el) return;
+      var c = galleryCredits[i] || '';
+      if(c){ el.textContent = c; sec.style.display = ''; }
+      else { sec.style.display = 'none'; }
+    }
+    function initGallery(items, autoplay){
+      if(items){
+        galleryCredits = items.map(creditOf);
         document.querySelector('.gallery .swiper-wrapper').innerHTML =
-          images.map(function(src,i){
-            return '<div class="swiper-slide"><img src="'+src+'" alt="Lavoro '+(i+1)+'"></div>';
+          items.map(function(it,i){
+            return '<div class="swiper-slide"><img src="'+srcOf(it)+'" alt="Lavoro '+(i+1)+'"></div>';
           }).join('');
       }
       if(gallerySwiper) gallerySwiper.destroy(true, true);
@@ -292,9 +303,14 @@
         loop: true, speed: 600,
         pagination: { el: '.swiper-pagination', clickable: true },
         navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
+        on: {
+          init: function(){ showCredit(this.realIndex); },
+          slideChange: function(){ showCredit(this.realIndex); }
+        }
       };
       if(autoplay) cfg.autoplay = { delay: 4000, disableOnInteraction: false };
       gallerySwiper = new Swiper('.gallery .swiper', cfg);
+      showCredit(gallerySwiper.realIndex);
     }
     initGallery(null, false);
 
@@ -389,31 +405,24 @@
         }
 
         if(d.gallery){
+          // i crediti (sezione .credits) sono guidati dalle slide della gallery
           initGallery(d.gallery.images || null, !!d.gallery.autoplay);
-        }
-
-        if(d.credits){
-          var csec = document.querySelector('.credits');
-          if(csec){
-            if(d.credits){ document.querySelector('.credits__text').textContent = d.credits; csec.style.display = ''; }
-            else csec.style.display = 'none';
-          }
         }
 
         if(d.brands){
           var bsec = document.querySelector('.brands');
           if(d.brands.label) document.querySelector('.brands__label').textContent = d.brands.label;
           var bgrid = document.querySelector('.brands__grid');
-          if(d.brands.logos && d.brands.logos.length){
+          if(d.brands.image){
+            // immagine unica (gestita da Marco in Figma) → ha la precedenza sulla griglia
+            bgrid.innerHTML = '<img class="brands__full" src="'+d.brands.image+'" alt="Brand per cui ho lavorato" loading="lazy">';
+            bsec.style.display = '';
+          } else if(d.brands.logos && d.brands.logos.length){
             // loghi singoli → griglia monocromatica, classe per-logo per il bilanciamento
             bgrid.innerHTML = d.brands.logos.map(function(src){
               var name = src.split('/').pop().replace(/\.[a-zA-Z0-9]+$/,'');
               return '<img class="logo--'+name+'" src="'+src+'" alt="" loading="lazy">';
             }).join('');
-            bsec.style.display = '';
-          } else if(d.brands.image){
-            // immagine unica provvisoria
-            bgrid.innerHTML = '<img class="brands__full" src="'+d.brands.image+'" alt="Brand per cui ho lavorato" loading="lazy">';
             bsec.style.display = '';
           } else {
             bsec.style.display = 'none';
