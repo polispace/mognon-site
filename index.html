@@ -100,25 +100,18 @@
   /* ---------- BRANDS ---------- */
   .brands{background:#0a0a0a;color:var(--hero-fg);padding:clamp(4rem,12%,8rem) var(--gutter)}
   .brands__label{font-weight:500;font-size:clamp(.95rem,3.6vw,2rem);letter-spacing:-0.05em;line-height:1.09;margin-bottom:clamp(2.4rem,7%,4.2rem)}
-  /* loghi: flex centrato che va a capo; altezza uniforme + bilanciamento per-logo */
+  /* loghi: flex centrato che va a capo. Ogni logo entra in un box (max-w × max-h):
+     gli emblemi quadrati si fermano sull'altezza, i wordmark larghi sulla larghezza → equilibrio.
+     filter:invert(1) = bianco↔nero per il fondo scuro (i grigi restano grigi). Niente classi per-logo
+     così i nuovi loghi caricati da Marco si bilanciano da soli. */
   .brands__grid{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;
-    gap:clamp(2.2rem,7vw,3.4rem) clamp(2.2rem,7vw,3.8rem)}
-  .brands__grid img{flex:0 0 auto;width:auto;height:auto;max-width:40%;max-height:30px;
-    object-fit:contain;filter:brightness(0) invert(1);opacity:.92}
-  /* bilanciamento ottico per-logo (emblemi più alti, wordmark più contenuti) */
-  .brands__grid img.logo--bmw,
-  .brands__grid img.logo--burger-king{max-height:42px}
-  .brands__grid img.logo--plenitude{max-height:38px}
-  .brands__grid img.logo--db-group,
-  .brands__grid img.logo--mediolanum,
-  .brands__grid img.logo--cerave{max-height:34px}
-  .brands__grid img.logo--mini{max-height:28px}
-  .brands__grid img.logo--sephora,
-  .brands__grid img.logo--samsung{max-height:22px}
-  .brands__grid img.logo--mail-boxes-etc,
-  .brands__grid img.logo--polimi{max-height:26px}
-  /* immagine unica provvisoria (fallback): a piena larghezza */
-  .brands__grid img.brands__full{grid-column:1/-1;max-width:100%;max-height:none;filter:none;opacity:1;mix-blend-mode:screen}
+    gap:clamp(2.4rem,6vw,3.6rem) clamp(2.6rem,6vw,4rem)}
+  .brands__grid img{flex:0 0 auto;width:auto;height:auto;max-width:118px;max-height:46px;
+    object-fit:contain;filter:invert(1)}
+  /* AIA è già disegnato per il fondo scuro (scudo grigio + testo bianco) → non invertire */
+  .brands__grid img[src*="aia"]{filter:none}
+  /* immagine unica (fallback / override da Figma): a piena larghezza, già pensata per il fondo scuro */
+  .brands__grid img.brands__full{max-width:100%;max-height:none;filter:none;mix-blend-mode:screen}
 
   /* ---------- CREDITS (striscia crediti foto) ---------- */
   .credits{background:var(--cream);color:var(--ink);padding:clamp(1.6rem,4.5%,2.6rem) var(--gutter)}
@@ -136,8 +129,8 @@
     :root{--gutter:8%}
     .gallery{aspect-ratio:16/11}
     .reel__frame{aspect-ratio:16/10}
-    .brands__grid{gap:clamp(2.6rem,5vw,3.6rem) clamp(3rem,6vw,5rem)}
-    .brands__grid img{max-width:22%}
+    .brands__grid{gap:clamp(2.8rem,5vw,3.8rem) clamp(3rem,6vw,5rem)}
+    .brands__grid img{max-width:150px;max-height:54px}
   }
 
   /* ---------- DESKTOP ---------- */
@@ -221,24 +214,26 @@
   <section class="brands" aria-label="Brand">
     <p class="brands__label">Brand per cui ho lavorato</p>
     <div class="brands__grid">
-      <img class="logo--bmw" src="assets/logos/bmw.svg" alt="" loading="lazy">
-      <img class="logo--burger-king" src="assets/logos/burger-king.svg" alt="" loading="lazy">
-      <img class="logo--cerave" src="assets/logos/cerave.svg" alt="" loading="lazy">
-      <img class="logo--cinzano" src="assets/logos/cinzano.svg" alt="" loading="lazy">
-      <img class="logo--db-group" src="assets/logos/db-group.svg" alt="" loading="lazy">
-      <img class="logo--hilti" src="assets/logos/hilti.svg" alt="" loading="lazy">
-      <img class="logo--kerastase" src="assets/logos/kerastase.svg" alt="" loading="lazy">
-      <img class="logo--la-roche-posay" src="assets/logos/la-roche-posay.svg" alt="" loading="lazy">
-      <img class="logo--linaro" src="assets/logos/linaro.svg" alt="" loading="lazy">
-      <img class="logo--mail-boxes-etc" src="assets/logos/mail-boxes-etc.svg" alt="" loading="lazy">
-      <img class="logo--mediolanum" src="assets/logos/mediolanum.svg" alt="" loading="lazy">
-      <img class="logo--mini" src="assets/logos/mini.svg" alt="" loading="lazy">
-      <img class="logo--plenitude" src="assets/logos/plenitude.svg" alt="" loading="lazy">
-      <img class="logo--polimi" src="assets/logos/polimi.svg" alt="" loading="lazy">
-      <img class="logo--samsung" src="assets/logos/samsung.svg" alt="" loading="lazy">
-      <img class="logo--sephora" src="assets/logos/sephora.svg" alt="" loading="lazy">
-      <img class="logo--vichy" src="assets/logos/vichy.svg" alt="" loading="lazy">
-      <img class="logo--zuegg" src="assets/logos/zuegg.svg" alt="" loading="lazy">
+      <img src="assets/logos/aia.svg" alt="" loading="lazy">
+      <img src="assets/logos/bmw.svg" alt="" loading="lazy">
+      <img src="assets/logos/burger-king.svg" alt="" loading="lazy">
+      <img src="assets/logos/cerave.svg" alt="" loading="lazy">
+      <img src="assets/logos/cinzano.svg" alt="" loading="lazy">
+      <img src="assets/logos/db-group.svg" alt="" loading="lazy">
+      <img src="assets/logos/hilti.svg" alt="" loading="lazy">
+      <img src="assets/logos/hype.svg" alt="" loading="lazy">
+      <img src="assets/logos/kerastase.svg" alt="" loading="lazy">
+      <img src="assets/logos/la-roche-posay.svg" alt="" loading="lazy">
+      <img src="assets/logos/linaro.svg" alt="" loading="lazy">
+      <img src="assets/logos/mail-boxes-etc.svg" alt="" loading="lazy">
+      <img src="assets/logos/mediolanum.svg" alt="" loading="lazy">
+      <img src="assets/logos/mini.svg" alt="" loading="lazy">
+      <img src="assets/logos/plenitude.svg" alt="" loading="lazy">
+      <img src="assets/logos/polimi.svg" alt="" loading="lazy">
+      <img src="assets/logos/samsung.svg" alt="" loading="lazy">
+      <img src="assets/logos/sephora.svg" alt="" loading="lazy">
+      <img src="assets/logos/vichy.svg" alt="" loading="lazy">
+      <img src="assets/logos/zuegg.svg" alt="" loading="lazy">
     </div>
   </section>
 
@@ -418,10 +413,9 @@
             bgrid.innerHTML = '<img class="brands__full" src="'+d.brands.image+'" alt="Brand per cui ho lavorato" loading="lazy">';
             bsec.style.display = '';
           } else if(d.brands.logos && d.brands.logos.length){
-            // loghi singoli → griglia monocromatica, classe per-logo per il bilanciamento
+            // loghi singoli (SVG b/n, invertiti via CSS per il fondo scuro)
             bgrid.innerHTML = d.brands.logos.map(function(src){
-              var name = src.split('/').pop().replace(/\.[a-zA-Z0-9]+$/,'');
-              return '<img class="logo--'+name+'" src="'+src+'" alt="" loading="lazy">';
+              return '<img src="'+src+'" alt="" loading="lazy">';
             }).join('');
             bsec.style.display = '';
           } else {
