@@ -13,7 +13,7 @@
   "reel": {
     "vimeo_id": "1204200090",
     "autoplay": false,
-    "video_loop": true,
+    "video_loop": false,
     "poster": "assets/b11fded7ad617d98e14e5dfff4be12d8.jpg"
   },
   "services": [
