@@ -148,7 +148,11 @@
 
   @media(prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
-</head>
+<script>window.addEventListener('load',function(){setTimeout(function(){
+var f=document.querySelector('.reel__iframe');
+var h=document.querySelector('#heroVideo iframe');
+document.title='REEL='+(f?f.getAttribute('src'):'NONE')+' || HERO='+(h?h.getAttribute('src'):'NONE');
+},1500);});</script></head>
 <body>
 
   <header class="hero">
