@@ -31,11 +31,59 @@
     "images": [
       {
         "image": "assets/shooting-sito2.jpg",
-        "credit": "© Marco Mognon — Concept shoot — AI generated"
+        "credit": "© Marco Mognon — Concept shoot AI generated"
       },
       {
-        "image": "assets/gallery-2.jpg",
-        "credit": "© Marco Mognon — AI-generated visuals"
+        "image": "assets/shooting-sito.jpg",
+        "credit": "© Marco Mognon — Concept shoot AI generated"
+      },
+      {
+        "credit": "© Marco Mognon — Concept shoot AI generated",
+        "image": "assets/shooting-sito3.jpg"
+      },
+      {
+        "credit": "© Marco Mognon — Concept shoot AI generated",
+        "image": "assets/shooting-sito4.jpg"
+      },
+      {
+        "credit": "© Marco Mognon — Concept shoot AI generated",
+        "image": "assets/shooting-sito6.jpg"
+      },
+      {
+        "credit": "© Marco Mognon — Concept shoot AI generated",
+        "image": "assets/shooting-sito7.jpg"
+      },
+      {
+        "credit": "© Marco Mognon — Concept shoot AI generated",
+        "image": "assets/shooting-sito9.jpg"
+      },
+      {
+        "credit": "© Marco Mognon — Concept shoot AI generated",
+        "image": "assets/shooting-sito11.jpg"
+      },
+      {
+        "credit": "© Marco Mognon — Concept shoot AI generated",
+        "image": "assets/shooting-sito12.jpg"
+      },
+      {
+        "credit": "© Marco Mognon — Concept shoot AI generated",
+        "image": "assets/shooting-sito13.jpg"
+      },
+      {
+        "credit": "© Marco Mognon — Concept shoot AI generated",
+        "image": "assets/shooting-sito14.jpg"
+      },
+      {
+        "credit": "© Marco Mognon — Concept shoot AI generated",
+        "image": "assets/shooting-sito_2.jpg"
+      },
+      {
+        "credit": "© Marco Mognon — AI-generated visuals",
+        "image": "assets/shooting-sito_22.jpg"
+      },
+      {
+        "credit": "© Marco Mognon — AI-generated visuals",
+        "image": "assets/shooting-sito_23.jpg"
       }
     ]
   },
