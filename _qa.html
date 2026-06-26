@@ -158,9 +158,8 @@
   @media(prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 <script>window.addEventListener('load',function(){setTimeout(function(){
-var f=document.querySelector('.reel__iframe');
-var b=document.querySelector('.reel__audio');
-document.title='REELSRC='+(f?f.getAttribute('src'):'NONE')+' || BTN='+(b?('YES['+b.textContent.trim()+']'):'NO');
+function r(sel){var e=document.querySelector(sel);if(!e)return sel+'=NONE';var b=e.getBoundingClientRect();var cs=getComputedStyle(e);return sel+' top='+Math.round(b.top)+' h='+Math.round(b.height)+' bg='+cs.backgroundColor+' pad='+cs.paddingTop+'/'+cs.paddingBottom;}
+document.title=[r('.intro'),r('.reel'),r('.reel__frame'),r('.reel__iframe')].join(' || ');
 },2500);});</script></head>
 <body>
 

@@ -355,6 +355,10 @@
         // pulsante audio (mute/unmute) via Vimeo Player API
         if(window.Vimeo){
           var player = new Vimeo.Player(ifr);
+          // adatta la banda all'aspect-ratio reale del video → niente bande nere (letterbox)
+          Promise.all([player.getVideoWidth(), player.getVideoHeight()]).then(function(d){
+            if(d[0] && d[1]) frame.style.aspectRatio = d[0] + ' / ' + d[1];
+          }).catch(function(){});
           var btn = document.createElement('button');
           btn.type = 'button';
           btn.className = 'reel__audio';
