@@ -74,6 +74,15 @@
   /* reel in autoplay: banda video 16:9, niente play/poster */
   .reel__frame.reel__frame--video-bg{aspect-ratio:16/9;cursor:default}
   .reel__frame--video-bg .reel__play{display:none}
+  /* pulsante audio custom sul reel (in basso a destra) */
+  .reel__audio{position:absolute;right:clamp(12px,2.5vw,26px);bottom:clamp(12px,2.5vw,26px);z-index:2;
+    display:inline-flex;align-items:center;gap:.5em;cursor:pointer;
+    background:rgba(10,10,10,.45);-webkit-backdrop-filter:blur(5px);backdrop-filter:blur(5px);
+    border:1px solid rgba(255,255,255,.55);color:#fff;border-radius:999px;
+    padding:.55em .85em;font:500 .8rem/1 "Geist","Helvetica Neue",Helvetica,Arial,sans-serif;
+    letter-spacing:-.02em;transition:background .2s ease}
+  .reel__audio:hover{background:rgba(10,10,10,.7)}
+  .reel__audio svg{width:16px;height:16px;display:block;fill:#fff;flex:0 0 auto}
 
   /* ---------- SERVICES ---------- */
   .services{background:var(--peri);color:var(--list);padding:clamp(4rem,12%,10rem) var(--gutter)}
@@ -150,9 +159,9 @@
 </style>
 <script>window.addEventListener('load',function(){setTimeout(function(){
 var f=document.querySelector('.reel__iframe');
-var h=document.querySelector('#heroVideo iframe');
-document.title='REEL='+(f?f.getAttribute('src'):'NONE')+' || HERO='+(h?h.getAttribute('src'):'NONE');
-},1500);});</script></head>
+var b=document.querySelector('.reel__audio');
+document.title='REELSRC='+(f?f.getAttribute('src'):'NONE')+' || BTN='+(b?('YES['+b.textContent.trim()+']'):'NO');
+},2500);});</script></head>
 <body>
 
   <header class="hero">
@@ -251,6 +260,7 @@ document.title='REEL='+(f?f.getAttribute('src'):'NONE')+' || HERO='+(h?h.getAttr
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <script src="https://player.vimeo.com/api/player.js"></script>
   <script>
     // Netlify Identity → /admin/ dopo login/invito
     if(window.netlifyIdentity){
@@ -319,16 +329,20 @@ document.title='REEL='+(f?f.getAttribute('src'):'NONE')+' || HERO='+(h?h.getAttr
     }
     initGallery(null, false);
 
-    // Reel: autoplay (background) oppure click-to-play, loop da data-loop
+    // Icone altoparlante (muto / audio attivo)
+    var ICON_MUTED = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3a4.5 4.5 0 0 0-2.5-4.03v8.06A4.5 4.5 0 0 0 16.5 12zM19 12a7 7 0 0 1-3.5 6.06l1.46 1.46A9 9 0 0 0 21 12a9 9 0 0 0-4.04-7.52L15.5 5.94A7 7 0 0 1 19 12z" opacity=".35"/><path d="M2 4.27 3.28 3 21 20.72 19.73 22l-3.2-3.2A9 9 0 0 1 14 19.74v-2.06a7 7 0 0 0 1.05-.37L12 14.27V20l-5-5H3V9h2.27L2 5.73V4.27z"/></svg>';
+    var ICON_ON    = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3a4.5 4.5 0 0 0-2.5-4.03v8.06A4.5 4.5 0 0 0 16.5 12zM14 3.23v2.06A7 7 0 0 1 14 18.71v2.06A9 9 0 0 0 14 3.23z"/></svg>';
+
+    // Reel: autoplay muto (con pulsante audio) oppure click-to-play; loop e autoplay dal CMS
     document.querySelectorAll('.reel__frame').forEach(function(frame){
-      // autoplay: video di sfondo muto, niente poster/play (come l'hero)
+
+      // autoplay: video parte muto e pulito (controls=0); pulsante custom per attivare l'audio
       function autoBg(){
         var id   = vimeoId(frame.getAttribute('data-vimeo-id'));
         var loop = frame.getAttribute('data-loop') === 'true';
         if(!id) return;
-        var src = 'https://player.vimeo.com/video/'+id+'?'+(loop
-          ? 'background=1'
-          : 'autoplay=1&muted=1&loop=0&controls=0&title=0&byline=0&portrait=0');
+        var src = 'https://player.vimeo.com/video/'+id+
+          '?autoplay=1&muted=1&controls=0&title=0&byline=0&portrait=0&loop='+(loop?'1':'0');
         var existing = frame.querySelector('.reel__iframe');
         if(existing && existing.getAttribute('src') === src) return; // già il video giusto
         var ifr = document.createElement('iframe');
@@ -341,8 +355,47 @@ document.title='REEL='+(f?f.getAttribute('src'):'NONE')+' || HERO='+(h?h.getAttr
         frame.appendChild(ifr);
         frame.removeAttribute('role');
         frame.removeAttribute('tabindex');
+
+        // pulsante audio (mute/unmute) via Vimeo Player API
+        if(window.Vimeo){
+          var player = new Vimeo.Player(ifr);
+          var btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'reel__audio';
+          var muted = true;
+          function paint(){
+            btn.innerHTML = (muted ? ICON_MUTED : ICON_ON) + '<span>'+(muted ? 'Attiva audio' : 'Audio attivo')+'</span>';
+            btn.setAttribute('aria-label', muted ? 'Attiva audio' : 'Disattiva audio');
+          }
+          paint();
+          btn.addEventListener('click', function(e){
+            e.stopPropagation();
+            muted = !muted;
+            player.setMuted(muted).catch(function(){});
+            if(!muted) player.setVolume(1).catch(function(){});
+            paint();
+          });
+          frame.appendChild(btn);
+        }
       }
-      // click-to-play: player con audio e controlli al click
+
+      // ripristina l'anteprima cliccabile (poster + play) quando autoplay è OFF
+      function buildPoster(){
+        if(frame.querySelector('.reel__poster') && !frame.querySelector('.reel__iframe')) {
+          // già in modalità poster: aggiorna solo la src
+        } else {
+          frame.classList.remove('reel__frame--video-bg');
+          frame.innerHTML = '<img class="reel__poster" src="" alt="Anteprima del video" style="opacity:0;transition:opacity .4s">'
+                          + '<span class="reel__play" aria-hidden="true"></span>';
+          frame.setAttribute('role','button');
+          frame.setAttribute('tabindex','0');
+        }
+        var poster = frame.querySelector('.reel__poster');
+        var url = frame.getAttribute('data-poster') || '';
+        if(poster && url){ poster.onload = function(){ poster.style.opacity = '1'; }; poster.src = url; }
+      }
+
+      // click-to-play: player con audio e controlli nativi al click (solo se autoplay OFF)
       function play(){
         if(frame.getAttribute('data-autoplay') === 'true') return;
         var id   = vimeoId(frame.getAttribute('data-vimeo-id'));
@@ -357,8 +410,10 @@ document.title='REEL='+(f?f.getAttribute('src'):'NONE')+' || HERO='+(h?h.getAttr
         frame.innerHTML = '';
         frame.appendChild(ifr);
       }
+
       frame.setupReel = function(){
         if(frame.getAttribute('data-autoplay') === 'true') autoBg();
+        else buildPoster();
       };
       frame.addEventListener('click', play);
       frame.addEventListener('keydown', function(e){
@@ -396,13 +451,8 @@ document.title='REEL='+(f?f.getAttribute('src'):'NONE')+' || HERO='+(h?h.getAttr
           if(d.reel.vimeo_id) frame.setAttribute('data-vimeo-id', d.reel.vimeo_id);
           frame.setAttribute('data-loop', d.reel.video_loop ? 'true' : 'false');
           frame.setAttribute('data-autoplay', d.reel.autoplay ? 'true' : 'false');
-          if(d.reel.autoplay){
-            if(frame.setupReel) frame.setupReel();
-          } else if(d.reel.poster){
-            var poster = document.querySelector('.reel__poster');
-            poster.onload = function(){ poster.style.opacity = '1'; };
-            poster.src = d.reel.poster;
-          }
+          if(d.reel.poster) frame.setAttribute('data-poster', d.reel.poster);
+          if(frame.setupReel) frame.setupReel();   // gestisce sia autoplay sia click-to-play
         }
 
         if(d.services && d.services.length){
