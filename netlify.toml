@@ -6,3 +6,10 @@
   [headers.values]
     X-Frame-Options = "SAMEORIGIN"
     X-Content-Type-Options = "nosniff"
+
+# I contenuti modificabili dal CMS non devono essere messi in cache:
+# così il sito mostra sempre l'ultima versione (no "a volte vecchio video")
+[[headers]]
+  for = "/content.json"
+  [headers.values]
+    Cache-Control = "no-cache, no-store, must-revalidate"

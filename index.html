@@ -425,7 +425,7 @@
     // CMS content loader
     (async function(){
       try {
-        var r = await fetch('content.json');
+        var r = await fetch('content.json?v=' + Date.now(), { cache: 'no-store' });
         if(!r.ok) return;
         var d = await r.json();
 
