@@ -158,9 +158,9 @@
   @media(prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 <script>window.addEventListener('load',function(){setTimeout(function(){
-function r(sel){var e=document.querySelector(sel);if(!e)return sel+'=NONE';var b=e.getBoundingClientRect();var cs=getComputedStyle(e);return sel+' top='+Math.round(b.top)+' h='+Math.round(b.height)+' bg='+cs.backgroundColor+' pad='+cs.paddingTop+'/'+cs.paddingBottom;}
-document.title=[r('.intro'),r('.reel'),r('.reel__frame'),r('.reel__iframe')].join(' || ');
-},2500);});</script></head>
+var h=document.querySelector('#heroVideo iframe');
+document.title='HERO='+(h?h.getAttribute('src'):'NONE');
+},2000);});</script></head>
 <body>
 
   <header class="hero">
@@ -275,22 +275,20 @@ document.title=[r('.intro'),r('.reel'),r('.reel__frame'),r('.reel__iframe')].joi
       return m ? m[1] : String(v).replace(/\D/g,'');
     }
 
-    // Hero video: loop=true → background=1 (autoplay+loop+mute), loop=false → autoplay senza loop
+    // Hero video: autoplay muto, pulito (controls=0). NB: niente background=1 perché
+    // sull'account Vimeo gratuito non fa partire l'autoplay; controls=0 invece sì (come il reel).
     function initHeroVideo(id, loop){
       var el = document.getElementById('heroVideo');
       id = vimeoId(id);
       if(!el || !id) return;
       el.innerHTML = '';
       var ifr = document.createElement('iframe');
-      ifr.src = 'https://player.vimeo.com/video/'+id+'?'+(
-        loop !== false
-          ? 'background=1'
-          : 'autoplay=1&loop=0&muted=1&controls=0&title=0&byline=0&portrait=0'
-      );
+      ifr.src = 'https://player.vimeo.com/video/'+id+
+        '?autoplay=1&muted=1&controls=0&title=0&byline=0&portrait=0&loop='+(loop !== false ? '1' : '0');
       ifr.allow = 'autoplay; fullscreen';
       el.appendChild(ifr);
     }
-    initHeroVideo('1135024751', true);
+    initHeroVideo('1205391054', true);
 
     // Gallery Swiper: autoplay=true → avanza da solo ogni 4s · crediti sincronizzati con la slide
     var gallerySwiper, galleryCredits = [];
@@ -358,6 +356,10 @@ document.title=[r('.intro'),r('.reel'),r('.reel__frame'),r('.reel__iframe')].joi
         // pulsante audio (mute/unmute) via Vimeo Player API
         if(window.Vimeo){
           var player = new Vimeo.Player(ifr);
+          // adatta la banda all'aspect-ratio reale del video → niente bande nere (letterbox)
+          Promise.all([player.getVideoWidth(), player.getVideoHeight()]).then(function(d){
+            if(d[0] && d[1]) frame.style.aspectRatio = d[0] + ' / ' + d[1];
+          }).catch(function(){});
           var btn = document.createElement('button');
           btn.type = 'button';
           btn.className = 'reel__audio';
@@ -424,7 +426,7 @@ document.title=[r('.intro'),r('.reel'),r('.reel__frame'),r('.reel__iframe')].joi
     // CMS content loader
     (async function(){
       try {
-        var r = await fetch('content.json');
+        var r = await fetch('content.json?v=' + Date.now(), { cache: 'no-store' });
         if(!r.ok) return;
         var d = await r.json();
 
