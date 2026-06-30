@@ -278,14 +278,17 @@
       var el = document.getElementById('heroVideo');
       id = vimeoId(id);
       if(!el || !id) return;
+      var src = 'https://player.vimeo.com/video/'+id+
+        '?autoplay=1&muted=1&controls=0&title=0&byline=0&portrait=0&loop='+(loop !== false ? '1' : '0');
+      var existing = el.querySelector('iframe');
+      if(existing && existing.getAttribute('src') === src) return; // già il video giusto: non ricostruire (interromperebbe l'autoplay)
       el.innerHTML = '';
       var ifr = document.createElement('iframe');
-      ifr.src = 'https://player.vimeo.com/video/'+id+
-        '?autoplay=1&muted=1&controls=0&title=0&byline=0&portrait=0&loop='+(loop !== false ? '1' : '0');
+      ifr.src = src;
       ifr.allow = 'autoplay; fullscreen';
       el.appendChild(ifr);
     }
-    initHeroVideo('1205391054', true);
+    // NB: l'hero viene inizializzato UNA volta sola, dal content loader (no doppia costruzione → autoplay affidabile)
 
     // Gallery Swiper: autoplay=true → avanza da solo ogni 4s · crediti sincronizzati con la slide
     var gallerySwiper, galleryCredits = [];
@@ -417,7 +420,7 @@
       frame.addEventListener('keydown', function(e){
         if(e.key==='Enter'||e.key===' '){ e.preventDefault(); play(); }
       });
-      frame.setupReel();   // applica i default dell'HTML
+      // NB: niente setupReel() qui all'avvio → il reel viene inizializzato una volta sola dal content loader
     });
 
     // CMS content loader
