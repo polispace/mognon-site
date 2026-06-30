@@ -31,27 +31,11 @@
     "images": [
       {
         "credit": "© Marco Mognon — Concept shoot AI generated",
-        "image": "assets/shooting-sito_3.jpg"
+        "image": "assets/shooting-sito.jpg"
       },
       {
         "credit": "© Marco Mognon — Concept shoot AI generated",
-        "image": "assets/shooting-sito_32.jpg"
-      },
-      {
-        "credit": "© Marco Mognon — Concept shoot AI generated",
-        "image": "assets/shooting-sito_33.jpg"
-      },
-      {
-        "credit": "© Marco Mognon — Concept shoot AI generated",
-        "image": "assets/shooting-sito_34.jpg"
-      },
-      {
-        "image": "assets/shooting-sito2.jpg",
-        "credit": "© Marco Mognon — Concept shoot AI generated"
-      },
-      {
-        "image": "assets/shooting-sito.jpg",
-        "credit": "© Marco Mognon — Concept shoot AI generated"
+        "image": "assets/shooting-sito2.jpg"
       },
       {
         "credit": "© Marco Mognon — Concept shoot AI generated",
@@ -62,8 +46,12 @@
         "image": "assets/shooting-sito4.jpg"
       },
       {
-        "credit": "© Marco Mognon — Concept shoot AI generated",
-        "image": "assets/shooting-sito6.jpg"
+        "image": "assets/shooting-sito5.jpg",
+        "credit": "© Marco Mognon — Concept shoot AI generated"
+      },
+      {
+        "image": "assets/shooting-sito6.jpg",
+        "credit": "© Marco Mognon — Concept shoot AI generated"
       },
       {
         "credit": "© Marco Mognon — Concept shoot AI generated",
@@ -71,7 +59,15 @@
       },
       {
         "credit": "© Marco Mognon — Concept shoot AI generated",
+        "image": "assets/shooting-sito8.jpg"
+      },
+      {
+        "credit": "© Marco Mognon — Concept shoot AI generated",
         "image": "assets/shooting-sito9.jpg"
+      },
+      {
+        "credit": "© Marco Mognon — Concept shoot AI generated",
+        "image": "assets/shooting-sito10.jpg"
       },
       {
         "credit": "© Marco Mognon — Concept shoot AI generated",
@@ -91,15 +87,11 @@
       },
       {
         "credit": "© Marco Mognon — Concept shoot AI generated",
-        "image": "assets/shooting-sito_2.jpg"
+        "image": "assets/shooting-sito16.jpg"
       },
       {
         "credit": "© Marco Mognon — Concept shoot AI generated",
-        "image": "assets/shooting-sito_22.jpg"
-      },
-      {
-        "credit": "© Marco Mognon — Concept shoot AI generated",
-        "image": "assets/shooting-sito_23.jpg"
+        "image": "assets/shooting-sito17.jpg"
       }
     ]
   },
