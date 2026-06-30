@@ -279,7 +279,7 @@
       id = vimeoId(id);
       if(!el || !id) return;
       var src = 'https://player.vimeo.com/video/'+id+
-        '?autoplay=1&muted=1&controls=0&title=0&byline=0&portrait=0&loop='+(loop !== false ? '1' : '0');
+        '?autoplay=1&muted=1&controls=0&title=0&byline=0&portrait=0&autopause=0&loop='+(loop !== false ? '1' : '0');
       var existing = el.querySelector('iframe');
       if(existing && existing.getAttribute('src') === src) return; // già il video giusto: non ricostruire (interromperebbe l'autoplay)
       el.innerHTML = '';
@@ -339,7 +339,7 @@
         var loop = frame.getAttribute('data-loop') === 'true';
         if(!id) return;
         var src = 'https://player.vimeo.com/video/'+id+
-          '?autoplay=1&muted=1&controls=0&title=0&byline=0&portrait=0&loop='+(loop?'1':'0');
+          '?autoplay=1&muted=1&controls=0&title=0&byline=0&portrait=0&autopause=0&loop='+(loop?'1':'0');
         var existing = frame.querySelector('.reel__iframe');
         if(existing && existing.getAttribute('src') === src) return; // già il video giusto
         var ifr = document.createElement('iframe');
@@ -405,7 +405,7 @@
         var ifr = document.createElement('iframe');
         ifr.className = 'reel__iframe';
         ifr.src = 'https://player.vimeo.com/video/'+id+
-          '?autoplay=1&title=0&byline=0&portrait=0'+(loop ? '&loop=1' : '');
+          '?autoplay=1&title=0&byline=0&portrait=0&autopause=0'+(loop ? '&loop=1' : '');
         ifr.allow = 'autoplay; fullscreen; picture-in-picture';
         ifr.setAttribute('allowfullscreen','');
         frame.innerHTML = '';
