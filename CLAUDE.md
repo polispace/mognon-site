@@ -29,12 +29,12 @@ Design fornito su Figma dal cliente, in tre viste (desktop / tablet / mobile). V
 
 ## Token di design (sorgente di verità — verificati via Figma MCP)
 ```
---cream:    #FFF4D3              /* fondo intro + footer */
---peri:     #B2C9FF              /* fondo "Cosa Faccio" */
---violet:   rgba(47,0,255,0.5)   /* accento "+Altro? Chiedimi!" */
---ink:      #0A0A0A              /* testo nero */
---list:     #F7F4EB              /* testo lista su periwinkle */
---hero-fg:  #F2F2F2              /* testo bianco hero */
+--cream:    #F2F2F2                 /* fondo intro + footer (grigio chiaro) */
+--peri:     #0015FF                 /* fondo "Cosa Faccio" (blu elettrico) */
+--violet:   rgba(220,212,255,0.5)   /* accento "+Altro? Chiedimi!" (lilla tenue) */
+--ink:      #0015FF                 /* testo principale (blu) */
+--list:     #F7F4EB                 /* testo lista su blu */
+--hero-fg:  #F2F2F2                 /* testo bianco hero */
 font: "Geist"
 gutter (margine contenuti): 6.5% mobile · 8% tablet · 12% desktop
 breakpoint: 768px (tablet) · 1100px (desktop)
